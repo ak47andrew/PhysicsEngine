@@ -8,37 +8,31 @@ public class Program
     const int screenWidth = 1280;
     const int screenHeight = 720;
 
-    LayerManager layerManager;
-
     public static void Main()
     {
+        LayerManager layerManager = new LayerManager(1);
         float currentTime = 0;
         int frameNumber = 0;
-        MovementObject mo1 = new MovementObject()
-        {
-            Radius = 5,
-            Position = new Vector2(screenWidth / 3, screenHeight / 2),
-            Mass = 0.3f
-        };
-        MovementObject mo2 = new MovementObject()
-        {
-            Radius = 5,
-            Position = new Vector2(screenWidth / 2, screenHeight / 3),
-            Mass = 0.3f
-        };
-        MovementObject mo3 = new MovementObject()
-        {
-            Radius = 5,
-            Position = new Vector2(screenWidth / 2, screenHeight / 2),
-            Mass = 0.3f
-        };
+        MovementObject mo1 = new MovementObject(
+            position: new Vector2(screenWidth / 2, screenHeight / 2),
+            mass: 1,
+            radius: 5,
+            manager: layerManager,
+            layer: 0
+        );
+        MovementObject mo2 = new MovementObject(
+            position: new Vector2(screenWidth / 3, screenHeight / 3),
+            mass: 1,
+            radius: 5,
+            manager: layerManager,
+            layer: 0
+        );
 
         mo1.AddForce(-10, 10);
         mo2.AddForce(10, -10);
-        mo3.AddForce(10, 10);
 
         Raylib.InitWindow(screenWidth, screenHeight, "Playing around");
-        Raylib.SetTargetFPS(200);
+        Raylib.SetTargetFPS(120);
 
         while (!Raylib.WindowShouldClose())
         {
@@ -49,19 +43,14 @@ public class Program
             float deltaTime = Raylib.GetFrameTime();
             currentTime += deltaTime;
 
-            mo1.Update(deltaTime);
-            mo2.Update(deltaTime);
-            mo3.Update(deltaTime);
+            layerManager.UpdateLayer(0, deltaTime);
 
             if (currentTime >= 5) {
                 mo1.ClearForces();
                 mo2.ClearForces();
-                mo3.ClearForces();
             }
             
-            mo1.Draw();
-            mo2.Draw();
-            mo3.Draw();
+            layerManager.DrawLayer(0);
 
             Raylib.EndDrawing();
         }

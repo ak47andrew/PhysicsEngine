@@ -4,13 +4,21 @@ using System.Numerics;
 namespace ks;
 
 public class MovementObject : PhysicsObject {
-    public required Vector2 Position;
+    public Vector2 Position;
     public Vector2 Velocity = Vector2.Zero;
-    public required float Mass;
-    public required int Radius;
+    public float Mass;
+    public int Radius;
     public Color ObjectColor = Color.Red;
 
     private List<Vector2> forces = [];
+
+    public MovementObject(Vector2 position, float mass, int radius, LayerManager manager, int layer) 
+        : base(manager, layer)
+    {
+        Position = position;
+        Mass = mass;
+        Radius = radius;
+    }
 
     public void AddForce(Vector2 force) {
         forces.Add(force);
@@ -34,7 +42,7 @@ public class MovementObject : PhysicsObject {
         Position += Velocity * deltaTime;
     }
 
-    public void Draw() {
+    public override void Draw() {
         Raylib.DrawCircleV(Position, Radius, ObjectColor);
     }
 

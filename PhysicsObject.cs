@@ -1,6 +1,6 @@
 namespace ks;
 
-public class PhysicsObject {
+public abstract class PhysicsObject {
     public int Layer;
     public LayerManager LayerManager;
 
@@ -9,4 +9,6 @@ public class PhysicsObject {
         LayerManager = manager;
         manager.AddObjectToLayer(this, layer);
     }
+
+    public abstract void Draw();
 }
