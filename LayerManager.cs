@@ -37,4 +37,8 @@ public class LayerManager {
                 ((MovementObject)obj).Update(deltaTime);
         }
     }
+
+    public List<PhysicsObject> GetLayer(int layer){
+        return layers[layer];
+    }
 }

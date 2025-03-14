@@ -46,10 +46,11 @@ public class Program
             layerManager.UpdateLayer(0, deltaTime);
 
             if (currentTime >= 5) {
-                mo1.ClearForces();
-                mo2.ClearForces();
+                foreach (MovementObject mo in layerManager.GetLayer(0)){
+                    mo.ClearForces();
+                }
             }
-            
+
             layerManager.DrawLayer(0);
 
             Raylib.EndDrawing();
